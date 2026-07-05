@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     type: "website",
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "4 Irmãos | Materiais de Construção e Ferragens",
     description:
       "Construção, elétrica, hidráulica, ferragens, ferramentas e acabamento em Manaus.",

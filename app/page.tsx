@@ -94,21 +94,36 @@ const stores = [
   },
 ];
 
+const storePhoneE164 = "+55 92 98138-6162";
+const instagramUrl = "https://www.instagram.com/4irmaosconstrucao/";
+
+function parseStoreAddress(address: string) {
+  const [streetPart, localePart] = address.split(" - ");
+  const [bairro, cityState] = (localePart ?? "").split(", ");
+  const [city, region] = (cityState ?? "").split("-");
+
+  return {
+    streetAddress: bairro ? `${streetPart} - ${bairro}` : streetPart,
+    addressLocality: city ?? "Manaus",
+    addressRegion: region ?? "AM",
+  };
+}
+
 const structuredData = {
   "@context": "https://schema.org",
-  "@type": "HardwareStore",
-  name: "4 Irmãos Materiais de Construção e Ferragens",
-  alternateName: "4 Irmãos Construção",
-  telephone: "+55 92 98138-6162",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Rua Neuma Boh, 1",
-    addressLocality: "Manaus",
-    addressRegion: "AM",
-    addressCountry: "BR",
-  },
-  openingHours: ["Mo-Fr 07:00-17:00", "Sa 07:00-14:00"],
-  sameAs: ["https://www.instagram.com/4irmaosconstrucao/"],
+  "@graph": stores.map((store) => ({
+    "@type": "HardwareStore",
+    name: `4 Irmãos Materiais de Construção e Ferragens - ${store.name}`,
+    alternateName: "4 Irmãos Construção",
+    telephone: storePhoneE164,
+    address: {
+      "@type": "PostalAddress",
+      ...parseStoreAddress(store.address),
+      addressCountry: "BR",
+    },
+    openingHours: ["Mo-Fr 07:00-17:00", "Sa 07:00-14:00"],
+    sameAs: [instagramUrl],
+  })),
 };
 
 function PinIcon({ className = "h-5 w-5" }: { className?: string }) {
