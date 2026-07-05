@@ -29,10 +29,6 @@ body {
   background-color: var(--steel);
 }
 
-.bg-steel-light {
-  background-color: var(--steel-light);
-}
-
 .text-gold {
   color: var(--gold);
 }
@@ -354,6 +350,17 @@ body {
 
 .hero-copy {
   animation: fade-slide-up 700ms ease-out both;
+}
+
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 700ms ease-out, transform 700ms ease-out;
+}
+
+.reveal-on-scroll[data-visible="true"] {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .hero-chip {

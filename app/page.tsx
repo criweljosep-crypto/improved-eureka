@@ -1,5 +1,7 @@
 import Link from "next/link";
+import AnimatedStat from "./animated-stat";
 import CurriculoUpload from "./curriculo-upload";
+import ScrollReveal from "./scroll-reveal";
 import SiteHeader from "./site-header";
 
 const phone = "(92) 98138-6162";
@@ -300,7 +302,7 @@ export default function HomePage() {
         <div className="stats-strip relative mx-auto grid max-w-7xl grid-cols-1 border-t border-gray-800 px-4 sm:grid-cols-3">
           {stats.map((stat) => (
             <div key={stat.label} className="border-gray-800 py-5 sm:border-r sm:last:border-r-0">
-              <p className="stat-number text-3xl font-bold text-gold">{stat.value}</p>
+              <AnimatedStat value={stat.value} />
               <p className="mt-1 text-sm text-gray-300">{stat.label}</p>
             </div>
           ))}
@@ -308,57 +310,62 @@ export default function HomePage() {
       </section>
 
       <section id="produtos" className="section-band py-20">
-        <div className="mx-auto max-w-7xl px-4">
-          <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
-            <div>
-              <p className="eyebrow mb-3 text-sm font-semibold uppercase tracking-[0.22em] text-gold">
-                Linha de produtos
+        <ScrollReveal>
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+              <div>
+                <p className="eyebrow mb-3 text-sm font-semibold uppercase tracking-[0.22em] text-gold">
+                  Linha de produtos
+                </p>
+                <h2 className="text-3xl font-bold">Categorias para cada etapa da obra</h2>
+              </div>
+              <p className="max-w-xl text-sm leading-6 text-gray-400">
+                Consulte disponibilidade, ofertas e retirada pelo WhatsApp {phone}.
               </p>
-              <h2 className="text-3xl font-bold">Categorias para cada etapa da obra</h2>
             </div>
-            <p className="max-w-xl text-sm leading-6 text-gray-400">
-              Consulte disponibilidade, ofertas e retirada pelo WhatsApp {phone}.
-            </p>
-          </div>
 
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
-            {categories.map((category) => (
-              <article
-                key={category.title}
-                className="modern-card rounded-lg border border-gray-800 bg-gray-950 p-6 transition-colors hover:border-gold"
-              >
-                <span className="icon-tile mb-5 flex h-11 w-11 items-center justify-center rounded-lg bg-gold">
-                  <BoxIcon />
-                </span>
-                <h3 className="mb-3 text-lg font-semibold">{category.title}</h3>
-                <p className="text-sm leading-6 text-gray-400">{category.text}</p>
-              </article>
-            ))}
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
+              {categories.map((category) => (
+                <article
+                  key={category.title}
+                  className="modern-card rounded-lg border border-gray-800 bg-gray-950 p-6 transition-colors hover:border-gold"
+                >
+                  <span className="icon-tile mb-5 flex h-11 w-11 items-center justify-center rounded-lg bg-gold">
+                    <BoxIcon />
+                  </span>
+                  <h3 className="mb-3 text-lg font-semibold">{category.title}</h3>
+                  <p className="text-sm leading-6 text-gray-400">{category.text}</p>
+                </article>
+              ))}
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
       </section>
 
       <section className="section-band bg-gray-950 py-20">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 lg:grid-cols-[0.8fr_1.2fr]">
-          <div>
-            <p className="eyebrow mb-3 text-sm font-semibold uppercase tracking-[0.22em] text-gold">
-              Diferenciais
-            </p>
-            <h2 className="text-3xl font-bold">Mais canais, mais agilidade para comprar</h2>
+        <ScrollReveal>
+          <div className="mx-auto grid max-w-7xl gap-10 px-4 lg:grid-cols-[0.8fr_1.2fr]">
+            <div>
+              <p className="eyebrow mb-3 text-sm font-semibold uppercase tracking-[0.22em] text-gold">
+                Diferenciais
+              </p>
+              <h2 className="text-3xl font-bold">Mais canais, mais agilidade para comprar</h2>
+            </div>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              {benefits.map((benefit) => (
+                <div key={benefit} className="benefit-card flex gap-3 rounded-lg border border-gray-800 bg-black p-5">
+                  <span className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-gold" />
+                  <p className="text-sm leading-6 text-gray-300">{benefit}</p>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            {benefits.map((benefit) => (
-              <div key={benefit} className="benefit-card flex gap-3 rounded-lg border border-gray-800 bg-black p-5">
-                <span className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-gold" />
-                <p className="text-sm leading-6 text-gray-300">{benefit}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+        </ScrollReveal>
       </section>
 
       <section id="lojas" className="section-band py-20">
-        <div className="mx-auto max-w-7xl px-4">
+        <ScrollReveal>
+          <div className="mx-auto max-w-7xl px-4">
           <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
             <div>
               <p className="eyebrow mb-3 text-sm font-semibold uppercase tracking-[0.22em] text-gold">
@@ -417,11 +424,13 @@ export default function HomePage() {
               </article>
             ))}
           </div>
-        </div>
+          </div>
+        </ScrollReveal>
       </section>
 
       <section id="nossa-historia" className="section-band bg-gray-950 py-20">
-        <div className="mx-auto max-w-7xl px-4">
+        <ScrollReveal>
+          <div className="mx-auto max-w-7xl px-4">
           <h2 className="mb-12 text-center text-3xl font-bold">Nossa história</h2>
           <div className="mx-auto max-w-4xl">
             <div className="relative">
@@ -453,25 +462,28 @@ export default function HomePage() {
               })}
             </div>
           </div>
-        </div>
+          </div>
+        </ScrollReveal>
       </section>
 
       <section id="trabalhe-conosco" className="section-band py-20">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
-          <div>
-            <p className="eyebrow mb-3 text-sm font-semibold uppercase tracking-[0.22em] text-gold">
-              Faça parte
-            </p>
-            <h2 className="mb-5 text-3xl font-bold">Trabalhe conosco</h2>
-            <p className="text-sm leading-6 text-gray-400">
-              Buscamos pessoas organizadas, comunicativas e comprometidas com atendimento em loja, estoque, logística e vendas.
-              Envie seu currículo em PDF para futuras oportunidades.
-            </p>
+        <ScrollReveal>
+          <div className="mx-auto grid max-w-7xl gap-10 px-4 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+            <div>
+              <p className="eyebrow mb-3 text-sm font-semibold uppercase tracking-[0.22em] text-gold">
+                Faça parte
+              </p>
+              <h2 className="mb-5 text-3xl font-bold">Trabalhe conosco</h2>
+              <p className="text-sm leading-6 text-gray-400">
+                Buscamos pessoas organizadas, comunicativas e comprometidas com atendimento em loja, estoque, logística e vendas.
+                Envie seu currículo em PDF para futuras oportunidades.
+              </p>
+            </div>
+            <div className="form-shell rounded-lg bg-gray-950 p-6 md:p-8">
+              <CurriculoUpload />
+            </div>
           </div>
-          <div className="form-shell rounded-lg bg-gray-950 p-6 md:p-8">
-            <CurriculoUpload />
-          </div>
-        </div>
+        </ScrollReveal>
       </section>
 
       <section className="border-y border-gray-800 bg-gold py-10 text-black">

@@ -14,9 +14,29 @@ const RATE_LIMIT_MAX_REQUESTS = 5;
 
 // In-memory per-instance limiter: fine for a single container, resets on redeploy/restart.
 const submissionTimestampsByIp = new Map<string, number[]>();
+const SWEEP_EVERY_N_REQUESTS = 200;
+let requestsSinceSweep = 0;
+
+// The map only grows as new IPs show up, so without this it would retain one
+// entry per distinct visitor forever. Sweep periodically instead of on every
+// request to keep the common case cheap.
+function sweepStaleIps(now: number) {
+  for (const [ip, timestamps] of submissionTimestampsByIp) {
+    if (timestamps.every((timestamp) => now - timestamp >= RATE_LIMIT_WINDOW_MS)) {
+      submissionTimestampsByIp.delete(ip);
+    }
+  }
+}
 
 function isRateLimited(ip: string): boolean {
   const now = Date.now();
+
+  requestsSinceSweep += 1;
+  if (requestsSinceSweep >= SWEEP_EVERY_N_REQUESTS) {
+    requestsSinceSweep = 0;
+    sweepStaleIps(now);
+  }
+
   const recent = (submissionTimestampsByIp.get(ip) ?? []).filter(
     (timestamp) => now - timestamp < RATE_LIMIT_WINDOW_MS
   );
