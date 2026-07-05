@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
@@ -41,6 +41,10 @@ export const metadata: Metadata = {
       "Construção, elétrica, hidráulica, ferragens, ferramentas e acabamento em Manaus.",
   },
   robots: "index, follow",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#000000",
 };
 
 export default function RootLayout({

@@ -29,12 +29,16 @@ npm run dev
 
 Abra [http://localhost:3000](http://localhost:3000).
 
-## Build e lint
+## Build, lint e testes
 
 ```bash
-npm run build
 npm run lint
+npm run typecheck
+npm run test
+npm run build
 ```
+
+Um workflow de CI (`.github/workflows/ci.yml`) roda esses quatro passos em cada push/PR para `main`.
 
 ## Docker
 
@@ -64,5 +68,7 @@ docker run --rm -p 3000:3000 --env-file .env 4irmaos-site
 
 - `app/page.tsx` — conteúdo da landing page (hero, categorias, lojas, história, formulário)
 - `app/curriculo-upload.tsx` — formulário "Trabalhe conosco", envia para `/api/curriculo` com fallback via WhatsApp
-- `app/api/curriculo/route.ts` — recebe o formulário, valida e envia o currículo em PDF por e-mail via Resend
+- `app/api/curriculo/route.ts` — recebe o formulário, valida, aplica rate limiting e envia o currículo em PDF por e-mail via Resend (testes em `route.test.ts`)
 - `app/api/health/route.ts` — endpoint de healthcheck para o container
+- `app/manifest.ts`, `public/icon-*.png`, `app/apple-icon.tsx` — manifest PWA e ícones (instalável na tela inicial do celular)
+- `app/opengraph-image.tsx` / `app/twitter-image.tsx` — imagem gerada para preview ao compartilhar o link
