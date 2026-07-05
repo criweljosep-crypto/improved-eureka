@@ -9,11 +9,35 @@ const ALLOWED_SHIFTS = ["manha", "tarde", "integral", "fins-de-semana"];
 const PDF_MAGIC = Buffer.from("%PDF");
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const RATE_LIMIT_MAX_REQUESTS = 5;
+
+// In-memory per-instance limiter: fine for a single container, resets on redeploy/restart.
+const submissionTimestampsByIp = new Map<string, number[]>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const recent = (submissionTimestampsByIp.get(ip) ?? []).filter(
+    (timestamp) => now - timestamp < RATE_LIMIT_WINDOW_MS
+  );
+  recent.push(now);
+  submissionTimestampsByIp.set(ip, recent);
+  return recent.length > RATE_LIMIT_MAX_REQUESTS;
+}
+
+function getClientIp(request: Request): string {
+  return request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+}
+
 function errorResponse(message: string, status: number) {
   return NextResponse.json({ error: message }, { status });
 }
 
 export async function POST(request: Request) {
+  if (isRateLimited(getClientIp(request))) {
+    return errorResponse("Muitas tentativas. Aguarde alguns minutos e tente novamente.", 429);
+  }
+
   const resendApiKey = process.env.RESEND_API_KEY;
   const notifyEmail = process.env.CAREER_NOTIFICATION_EMAIL;
   const fromEmail = process.env.CAREER_FROM_EMAIL;
