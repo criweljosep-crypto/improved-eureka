@@ -1,132 +1,20 @@
 import Link from "next/link";
 import AnimatedStat from "./animated-stat";
+import {
+  benefits,
+  categories,
+  navItems,
+  phone,
+  stats,
+  stores,
+  structuredData,
+  timeline,
+  whatsappUrl,
+} from "./content";
 import CurriculoUpload from "./curriculo-upload";
+import HeroParallax from "./hero-parallax";
 import ScrollReveal from "./scroll-reveal";
 import SiteHeader from "./site-header";
-
-const phone = "(92) 98138-6162";
-const whatsappUrl =
-  "https://wa.me/5592981386162?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20quero%20consultar%20materiais.";
-
-const navItems = [
-  { label: "Início", href: "#inicio" },
-  { label: "Produtos", href: "#produtos" },
-  { label: "Lojas", href: "#lojas" },
-  { label: "História", href: "#nossa-historia" },
-  { label: "Trabalhe conosco", href: "#trabalhe-conosco" },
-];
-
-const stats = [
-  { value: "1998", label: "operação registrada" },
-  { value: "4", label: "lojas em Manaus" },
-  { value: "7h", label: "abertura das lojas" },
-];
-
-const categories = [
-  {
-    title: "Construção",
-    text: "Materiais para obra, reforma e manutenção, com atendimento direto para compra rápida.",
-  },
-  {
-    title: "Elétrica e hidráulica",
-    text: "Cabos, tomadas, conduítes, tubos, conexões e acessórios para instalações.",
-  },
-  {
-    title: "Ferragens e parafusos",
-    text: "Pregos, parafusos, dobradiças, arames, vergalhões e itens para estrutura.",
-  },
-  {
-    title: "Acabamento",
-    text: "Tintas, ferramentas, pisos, revestimentos, portas e janelas para finalizar melhor.",
-  },
-];
-
-const benefits = [
-  "Televendas pelo WhatsApp para consultar produtos antes de ir à loja.",
-  "Quatro unidades em Manaus para atender obra, reforma e manutenção.",
-  "Horário amplo: segunda a sexta das 7h às 17h e sábado das 7h às 14h.",
-  "Mix com construção, elétrica, hidráulica, ferragens, ferramentas e acabamento.",
-];
-
-const timeline = [
-  {
-    year: "1998",
-    title: "Início da operação",
-    text: "A Carvalho da Silva & Cia Ltda aparece em registros públicos usando o nome fantasia 4 Irmãos Materiais de Construção e Ferragens.",
-    imageLabel: "Origem",
-  },
-  {
-    year: "2024",
-    title: "Expansão em Manaus",
-    text: "A marca divulga uma nova filial no Novo Aleixo e reforça a presença com quatro lojas na cidade.",
-    imageLabel: "Nova filial",
-  },
-  {
-    year: "Hoje",
-    title: "Atendimento multicanal",
-    text: "A operação combina lojas físicas, televendas e WhatsApp para facilitar consultas de materiais, ofertas e retirada.",
-    imageLabel: "WhatsApp e loja",
-  },
-];
-
-const stores = [
-  {
-    name: "Loja Novo Aleixo - Mutirão",
-    address: "Rua Neuma Boh, 1 - Novo Aleixo, Manaus-AM",
-    hours: "Seg-Sex: 7h-17h | Sáb: 7h-14h",
-    phone,
-  },
-  {
-    name: "Loja São José",
-    address: "Rua Soldado Brito, 98 - São José, Manaus-AM",
-    hours: "Seg-Sex: 7h-17h | Sáb: 7h-14h",
-    phone,
-  },
-  {
-    name: "Loja Rua Cartola",
-    address: "Rua Cartola, 109 - Novo Aleixo, Manaus-AM",
-    hours: "Seg-Sex: 7h-17h | Sáb: 7h-14h",
-    phone,
-  },
-  {
-    name: "Loja Coronel Sávio Belota",
-    address: "Av. Coronel Sávio Belota, 144 - Novo Aleixo, Manaus-AM",
-    hours: "Seg-Sex: 7h-17h | Sáb: 7h-14h",
-    phone,
-  },
-];
-
-const storePhoneE164 = "+55 92 98138-6162";
-const instagramUrl = "https://www.instagram.com/4irmaosconstrucao/";
-
-function parseStoreAddress(address: string) {
-  const [streetPart, localePart] = address.split(" - ");
-  const [bairro, cityState] = (localePart ?? "").split(", ");
-  const [city, region] = (cityState ?? "").split("-");
-
-  return {
-    streetAddress: bairro ? `${streetPart} - ${bairro}` : streetPart,
-    addressLocality: city ?? "Manaus",
-    addressRegion: region ?? "AM",
-  };
-}
-
-const structuredData = {
-  "@context": "https://schema.org",
-  "@graph": stores.map((store) => ({
-    "@type": "HardwareStore",
-    name: `4 Irmãos Materiais de Construção e Ferragens - ${store.name}`,
-    alternateName: "4 Irmãos Construção",
-    telephone: storePhoneE164,
-    address: {
-      "@type": "PostalAddress",
-      ...parseStoreAddress(store.address),
-      addressCountry: "BR",
-    },
-    openingHours: ["Mo-Fr 07:00-17:00", "Sa 07:00-14:00"],
-    sameAs: [instagramUrl],
-  })),
-};
 
 function PinIcon({ className = "h-5 w-5" }: { className?: string }) {
   return (
@@ -226,7 +114,7 @@ export default function HomePage() {
       <section id="conteudo" className="hero-section site-grid-bg relative overflow-hidden border-b border-gray-900">
         <div className="brushed-steel absolute inset-0" />
         <div className="hero-dim absolute inset-0" />
-        <div className="floating-hero-bg" aria-hidden="true">
+        <HeroParallax>
           <span className="blueprint-ring ring-one" />
           <span className="blueprint-ring ring-two" />
           <span className="float-panel panel-one" />
@@ -237,7 +125,7 @@ export default function HomePage() {
           <span className="float-spark spark-one" />
           <span className="float-spark spark-two" />
           <span className="float-spark spark-three" />
-        </div>
+        </HeroParallax>
         <div className="relative z-10 mx-auto grid min-h-[88vh] max-w-7xl items-center gap-10 px-4 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:py-20">
           <div className="hero-copy max-w-3xl">
             <p className="eyebrow mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-gold">
@@ -486,7 +374,7 @@ export default function HomePage() {
         </ScrollReveal>
       </section>
 
-      <section className="border-y border-gray-800 bg-gold py-10 text-black">
+      <section className="cta-band border-y border-gray-800 bg-gold py-10 text-black">
         <div className="mx-auto flex max-w-7xl flex-col gap-5 px-4 md:flex-row md:items-center md:justify-between">
           <div>
             <h2 className="text-2xl font-bold">Precisa consultar materiais para sua obra?</h2>
@@ -505,7 +393,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <footer className="bg-black py-12">
+      <footer className="section-band bg-black py-12">
         <div className="mx-auto max-w-7xl px-4 text-center text-sm text-gray-500">
           <p>
             © {new Date().getFullYear()} 4 Irmãos Materiais de Construção e Ferragens. Todos os direitos reservados.

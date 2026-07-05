@@ -66,7 +66,9 @@ docker run --rm -p 3000:3000 --env-file .env 4irmaos-site
 
 ## Estrutura
 
-- `app/page.tsx` — conteúdo da landing page (hero, categorias, lojas, história, formulário)
+- `app/page.tsx` — layout/JSX da landing page (hero, categorias, lojas, história, formulário)
+- `app/content.ts` — dados editáveis do site (lojas, categorias, benefícios, linha do tempo, structured data). Para atualizar textos/endereços, mexa só aqui
+- `app/scroll-reveal.tsx`, `app/animated-stat.tsx` — efeitos visuais (fade-in ao rolar, contador animado nas estatísticas)
 - `app/curriculo-upload.tsx` — formulário "Trabalhe conosco", envia para `/api/curriculo` com fallback via WhatsApp
 - `app/api/curriculo/route.ts` — recebe o formulário, valida, aplica rate limiting e envia o currículo em PDF por e-mail via Resend (testes em `route.test.ts`)
 - `app/api/health/route.ts` — endpoint de healthcheck para o container

@@ -388,6 +388,9 @@ body {
 .section-band {
   position: relative;
   overflow: hidden;
+  background-image:
+    radial-gradient(circle at 12% -10%, rgba(212, 175, 55, 0.07), transparent 40%),
+    radial-gradient(circle at 90% 110%, rgba(212, 175, 55, 0.05), transparent 42%);
 }
 
 .section-band::before {
@@ -398,6 +401,17 @@ body {
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.32), transparent);
   content: "";
+}
+
+.cta-band {
+  position: relative;
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 14px,
+    rgba(0, 0, 0, 0.05) 14px,
+    rgba(0, 0, 0, 0.05) 28px
+  );
 }
 
 .modern-card,
